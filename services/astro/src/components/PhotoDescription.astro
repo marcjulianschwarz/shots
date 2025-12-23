@@ -1,0 +1,24 @@
+---
+interface Props {
+    description?: string;
+}
+
+const { description } = Astro.props;
+
+// Parse markdown description if exists
+let descriptionHtml = "";
+if (description) {
+    descriptionHtml = description.replace(/\n/g, "<br />");
+}
+---
+
+{
+    description && (
+        <div class="prose prose-invert max-w-none">
+            <p
+                class="text-zinc-300 leading-relaxed"
+                set:html={descriptionHtml}
+            />
+        </div>
+    )
+}

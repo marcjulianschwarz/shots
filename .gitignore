@@ -1,0 +1,5 @@
+.DS_Store
+source/*
+deploy.sh
+CLAUDE.md
+DOCUMENTATION.md

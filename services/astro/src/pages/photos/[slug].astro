@@ -1,0 +1,71 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TagList from "../../components/TagList.astro";
+import CameraInfo from "../../components/CameraInfo.astro";
+import PhotoHeader from "../../components/PhotoHeader.astro";
+import PhotoImage from "../../components/PhotoImage.astro";
+import PhotoMetadata from "../../components/PhotoMetadata.astro";
+import PhotoDescription from "../../components/PhotoDescription.astro";
+import PhotoActions from "../../components/PhotoActions.astro";
+import { getAllPhotos, getPhotoBySlug } from "../../lib/photos";
+
+export async function getStaticPaths() {
+    const photos = getAllPhotos();
+    return photos.map((photo) => ({
+        params: { slug: photo.slug },
+        props: { photo },
+    }));
+}
+
+const { photo } = Astro.props;
+---
+
+<Layout
+    title={`${photo.metadata.title} - Shots x Marc Julian`}
+    description={photo.metadata.description}
+>
+    <div class="max-w-5xl mx-auto mb-16">
+        <PhotoHeader />
+
+        <PhotoImage
+            images={photo.images}
+            title={photo.metadata.title}
+            slug={photo.slug}
+        />
+
+        <div class="space-y-6">
+            <PhotoMetadata
+                title={photo.metadata.title}
+                date={photo.metadata.date}
+                location={photo.metadata.location}
+            />
+
+            <PhotoDescription description={photo.metadata.description} />
+
+            {
+                photo.metadata.tags && photo.metadata.tags.length > 0 && (
+                    <div>
+                        <h3 class="text-sm font-semibold text-zinc-400 mb-3">
+                            Tags
+                        </h3>
+                        <TagList tags={photo.metadata.tags} />
+                    </div>
+                )
+            }
+
+            {
+                photo.metadata.camera && (
+                    <div>
+                        <CameraInfo camera={photo.metadata.camera} />
+                    </div>
+                )
+            }
+
+            <PhotoActions
+                originalImage={photo.images.original}
+                slug={photo.slug}
+                title={photo.metadata.title}
+            />
+        </div>
+    </div>
+</Layout>

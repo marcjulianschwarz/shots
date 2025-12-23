@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PhotoGrid from "../../components/PhotoGrid.astro";
+import { getAllTags, getPhotosByTag } from "../../lib/photos";
+
+export async function getStaticPaths() {
+    const tagCounts = getAllTags();
+    const tags = Array.from(tagCounts.keys());
+
+    return tags.map((tag) => ({
+        params: { tag },
+        props: { tag, count: tagCounts.get(tag) || 0 },
+    }));
+}
+
+const { tag, count } = Astro.props;
+const photos = getPhotosByTag(tag);
+---
+
+<Layout title={`#${tag} - Shots x Marc Julian`}>
+    <div class="space-y-8">
+        {/* Back button */}
+        <a
+            href="/tags"
+            class="inline-flex items-center text-zinc-400 hover:text-white transition-colors"
+        >
+            <svg
+                class="w-5 h-5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            All Tags
+        </a>
+
+        <div>
+            <h1 class="text-4xl font-bold text-white mb-2">#{tag}</h1>
+            <p class="text-zinc-400">
+                {count}
+                {count === 1 ? "photo" : "photos"}
+            </p>
+        </div>
+
+        <PhotoGrid photos={photos} />
+    </div>
+</Layout>

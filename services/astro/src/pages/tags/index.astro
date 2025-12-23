@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getAllTags } from "../../lib/photos";
+
+const tagCounts = getAllTags();
+const sortedTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
+---
+
+<Layout title="Tags - Shots x Marc Julian">
+    <div class="space-y-8">
+        <div>
+            <h1 class="text-4xl font-bold text-white mb-2">Tags</h1>
+            <p class="text-zinc-400">Browse photos by category</p>
+        </div>
+
+        {
+            sortedTags.length > 0 ? (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {sortedTags.map(([tag, count]) => (
+                        <a
+                            href={`/tags/${tag}`}
+                            class="block p-6 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 rounded-lg transition-colors group"
+                        >
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-xl font-semibold text-white group-hover:text-zinc-200">
+                                    #{tag}
+                                </h2>
+                                <span class="text-zinc-500 text-sm">
+                                    {count} {count === 1 ? "photo" : "photos"}
+                                </span>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            ) : (
+                <div class="text-center py-16">
+                    <p class="text-zinc-400">No tags found.</p>
+                </div>
+            )
+        }
+    </div>
+</Layout>

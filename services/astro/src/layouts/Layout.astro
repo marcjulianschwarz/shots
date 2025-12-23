@@ -1,0 +1,90 @@
+---
+import "../styles/globals.css";
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+    title = "Shots x Marc Julian",
+    description = "A collection of photography",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={description} />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <style is:inline>
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                background: #09090b;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            body {
+                background: #09090b;
+                color: #fafafa;
+                margin: 0;
+                min-height: 100vh;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    Roboto,
+                    "Helvetica Neue",
+                    Arial,
+                    sans-serif;
+            }
+        </style>
+        <title>{title}</title>
+    </head>
+    <body class="bg-zinc-950 text-zinc-100 min-h-screen">
+        <header class="border-b border-zinc-800" transition:persist>
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex items-center justify-between">
+                    <a
+                        href="/"
+                        class="text-xl font-bold text-white hover:text-zinc-300 transition-colors"
+                    >
+                        Shots x Marc Julian
+                    </a>
+                    <div class="flex gap-6">
+                        <a
+                            href="/"
+                            class="text-zinc-300 hover:text-white transition-colors"
+                        >
+                            Gallery
+                        </a>
+                        <a
+                            href="/tags"
+                            class="text-zinc-300 hover:text-white transition-colors"
+                        >
+                            Tags
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <slot />
+        </main>
+
+        <!-- <footer class="border-t border-zinc-800 mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <p class="text-center text-zinc-500 text-sm">
+                    &copy; {new Date().getFullYear()} Photography Portfolio
+                </p>
+            </div>
+        </footer> -->
+    </body>
+</html>

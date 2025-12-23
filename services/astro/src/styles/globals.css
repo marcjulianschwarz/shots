@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Enable native cross-document view transitions */
+@view-transition {
+    navigation: auto;
+}
+
+/* Dark-first color scheme */
+@theme {
+    --color-zinc-850: #27272a;
+    --color-zinc-750: #3a3a3f;
+}
+
+/* Base styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #18181b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+}

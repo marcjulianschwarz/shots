@@ -1,0 +1,49 @@
+---
+import type { Photo } from "../lib/types";
+
+interface Props {
+    photo: Photo;
+}
+
+const { photo } = Astro.props;
+---
+
+<a
+    href={`/photos/${photo.slug}`}
+    class="group relative block overflow-hidden rounded-lg bg-zinc-900 transition-transform hover:scale-[1.02] mb-6 break-inside-avoid will-change-transform"
+>
+    <picture class="block">
+        <source srcset={photo.images.thumbnail.webp} type="image/webp" />
+        <img
+            src={photo.images.thumbnail.jpg}
+            alt={photo.metadata.title}
+            loading="lazy"
+            class="w-full h-auto object-cover block rounded-lg"
+            transition:name={`photo-${photo.slug}`}
+        />
+    </picture>
+
+    {/* Overlay on hover */}
+    <div
+        class="absolute inset-0 bg-linear-to-t from-black/80 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+        <div class="absolute bottom-0 left-0 right-0 p-4">
+            <h3 class="text-white font-semibold text-lg mb-1">
+                {photo.metadata.title}
+            </h3>
+            {
+                photo.metadata.location &&
+                    (photo.metadata.location.city ||
+                        photo.metadata.location.country) && (
+                        <p class="text-zinc-300 text-sm">
+                            {photo.metadata.location.city}
+                            {photo.metadata.location.city &&
+                                photo.metadata.location.country &&
+                                ", "}
+                            {photo.metadata.location.country}
+                        </p>
+                    )
+            }
+        </div>
+    </div>
+</a>

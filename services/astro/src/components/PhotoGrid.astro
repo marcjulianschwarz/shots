@@ -1,0 +1,24 @@
+---
+import type { Photo } from "../lib/types";
+import PhotoCard from "./PhotoCard.astro";
+
+interface Props {
+    photos: Photo[];
+}
+
+const { photos } = Astro.props;
+---
+
+{
+    photos.length === 0 ? (
+        <div class="text-center py-16">
+            <p class="text-zinc-400 text-lg">No photos found.</p>
+        </div>
+    ) : (
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-6">
+            {photos.map((photo) => (
+                <PhotoCard photo={photo} />
+            ))}
+        </div>
+    )
+}

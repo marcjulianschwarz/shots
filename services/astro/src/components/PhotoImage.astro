@@ -1,0 +1,26 @@
+---
+interface Props {
+    images: {
+        medium: {
+            webp: string;
+            jpg: string;
+        };
+    };
+    title: string;
+    slug: string;
+}
+
+const { images, title, slug } = Astro.props;
+---
+
+<div class="flex justify-center mb-8">
+    <picture class="bg-zinc-900 rounded-lg overflow-hidden block">
+        <source srcset={images.medium.webp} type="image/webp" />
+        <img
+            src={images.medium.jpg}
+            alt={title}
+            class="h-auto max-h-[80vh] block"
+            transition:name={`photo-${slug}`}
+        />
+    </picture>
+</div>
